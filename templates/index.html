@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laptop Price Predictor</title>
+
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #ffffff;
+            padding: 40px 20px;
+        }
+
+        /* Headings */
+        h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        h3 {
+            margin: 25px 0 15px;
+            font-size: 20px;
+            color: #ffd369;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+            padding-bottom: 6px;
+        }
+
+        /* Forms */
+        form {
+            max-width: 720px;
+            margin: 0 auto 35px auto;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        input[type="number"],
+        select,
+        input[type="file"] {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 18px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            outline: none;
+            background: rgba(255, 255, 255, 0.95);
+            color: #222;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 0 0 2px #ffd369;
+        }
+
+        /* Buttons */
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #ffd369, #ffb703);
+            color: #222;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 25px rgba(255, 179, 3, 0.45);
+        }
+
+        /* Prediction Result */
+        .prediction {
+            text-align: center;
+            font-size: 26px;
+            margin-top: 25px;
+            color: #00ffab;
+            font-weight: 600;
+        }
+
+        /* Divider */
+        hr {
+            max-width: 720px;
+            margin: 45px auto;
+            border: none;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.35);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h2 {
+                font-size: 26px;
+            }
+
+            form {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Laptop Price Prediction</h2>
+
+    <form action="/predict" method="post">
+        <h3>Numeric Features</h3>
+        {% for col in num_cols %}
+            <label>{{ col }}</label>
+            <input type="number" step="any" name="{{ col }}" required>
+        {% endfor %}
+
+        <h3>Categorical Features</h3>
+        {% for col in cat_cols %}
+            <label>{{ col }}</label>
+            <select name="{{ col }}" required>
+                {% for val in cat_uniques[col] %}
+                    <option value="{{ val }}">{{ val }}</option>
+                {% endfor %}
+            </select>
+        {% endfor %}
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+        <div class="prediction">
+            Predicted Price: ₹ {{ prediction }}
+        </div>
+    {% endif %}
+
+    <hr>
+
+    <h3 style="text-align:center;">Batch Prediction</h3>
+
+    <form action="/batch_predict" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload & Predict</button>
+    </form>
+
+</body>
+</html>

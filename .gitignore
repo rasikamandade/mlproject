@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs and outputs
+logs/
+*.log
+notebooks/.ipynb_checkpoints/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Environment files
+.myenv
+venv
+env
+
+# Jupyter
+.ipynb_checkpoints/
+
+
+
+env/
+__pycache__/
+*.ipynb
+logs/
+artifacts/raw/
+artifacts/unseen_test/
+artifacts/transformed/train.csv
+artifacts/transformed/test.csv
+prediction/models/archive/
+
+Dockerfile
+.dockerignore
+
+notebook
