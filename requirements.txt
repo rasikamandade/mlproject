@@ -9,3 +9,4 @@ flask
 notebook
 python-dotenv
 streamlit
+gunicorn
